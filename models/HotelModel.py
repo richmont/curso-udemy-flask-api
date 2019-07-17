@@ -1,7 +1,9 @@
 from sql_alchemy import banco
 
+
 class HotelModel:
-    __tablename__ = 'hoteis' # nome da tabela
+
+    __tablename__ = 'hoteis'  # nome da tabela
 
     # mapeia os elementos do objeto em colunas do banco
     hotel_id = banco.Column(banco.String, primary_key=True)
@@ -17,6 +19,7 @@ class HotelModel:
         self.estrelas = estrelas
         self.diaria = diaria
         self.cidade = cidade
+
     def json(self):
         # converte objeto recem criado para formato json
         return {
