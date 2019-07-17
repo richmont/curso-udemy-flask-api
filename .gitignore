@@ -1,0 +1,8 @@
+# ignorar arquivos python compilado
+*.pyc
+
+# ignorar diretórios do virtualenv e vscode
+bin/
+.vscode
+include/
+lib/
