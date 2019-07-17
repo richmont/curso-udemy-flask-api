@@ -32,9 +32,12 @@ class Hoteis(Resource):
 
 class Hotel(Resource):
     argumentos = reqparse.RequestParser()  # cria variável dos parâmetros
-    argumentos.add_argument('nome')
-    argumentos.add_argument('estrelas')
-    argumentos.add_argument('diaria')
+    argumentos.add_argument('nome', type=str, required=True,\
+         help="The field 'nome' cannot be left blank")
+    argumentos.add_argument('estrelas', type=float, required=True, \
+        help="The field 'nome' cannot be left blank")
+    argumentos.add_argument('diaria', type=float, required=True, \
+        help="The field 'nome' cannot be left blank")
     argumentos.add_argument('cidade')
 
     def get(self, hotel_id):
@@ -50,7 +53,12 @@ class Hotel(Resource):
 ".format(hotel_id)}
         dados = Hotel.argumentos.parse_args()  # transfere para lista
         hotel = HotelModel(hotel_id, **dados)
-        hotel.save_hotel()
+        try:
+            hotel.save_hotel()
+        except:
+            #  internal server error
+            return {'message': '\
+                An internal error ocurred trying to save hotel.'}, 500
         return hotel.json()
 
     def put(self, hotel_id):
@@ -65,13 +73,21 @@ class Hotel(Resource):
             return hotel_encontrado.json(), 200
         # caso não encontre, crie e salve no banco
         hotel = HotelModel(hotel_id, **dados)
-        hotel.save_hotel()
+        try:
+            hotel.save_hotel()
+        except:
+            #  internal server error
+            return {'message': '\
+                An internal error ocurred trying to save hotel.'}, 500
         return hotel.json(), 201
 
     def delete(self, hotel_id):
         hotel = HotelModel.find_hotel(hotel_id)
         if hotel:
-            hotel.delete_hotel()
+            try:
+                hotel.delete_hotel()
+            except:
+                return {'message': '\
+                An internal error ocurred trying to save hotel.'}, 500
             return {'message': 'Hotel deleted'}
-        # criando uma nova lista sem o hotel_id que foi rececbido
         return {'message': 'Hotel not found'}, 404
