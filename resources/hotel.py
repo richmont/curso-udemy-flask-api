@@ -49,8 +49,9 @@ class Hotel(Resource):
 
     def post(self, hotel_id):
         if HotelModel.find_hotel(hotel_id):
+            # retorna 409 (Conflict) caso já haja hotel_id no banco
             return {"message": "Hotel_id '{}' already exists.\
-".format(hotel_id)}
+".format(hotel_id)},409
         dados = Hotel.argumentos.parse_args()  # transfere para lista
         hotel = HotelModel(hotel_id, **dados)
         try:
@@ -89,5 +90,5 @@ class Hotel(Resource):
             except:
                 return {'message': '\
                 An internal error ocurred trying to save hotel.'}, 500
-            return {'message': 'Hotel deleted'}
+            return {'message': 'Hotel deleted'},200
         return {'message': 'Hotel not found'}, 404
