@@ -16,12 +16,12 @@ def cria_banco():
     banco.create_all()
 
 
-api.add_resource(Hoteis,'/hoteis')
-api.add_resource(Hotel,'/hoteis/<string:hotel_id>')
+api.add_resource(Hoteis, '/hoteis')
+api.add_resource(Hotel, '/hoteis/<string:hotel_id>')
 
 
 if __name__ == '__main__':
     # chamar a inicialização do banco apenas quando o aplicativo for rodado
-    from sql_alchemy import banco   
-    banco.init_app(app) 
+    from sql_alchemy import banco
+    banco.init_app(app)
     app.run(debug=True)

@@ -32,12 +32,12 @@ class Hoteis(Resource):
 
 class Hotel(Resource):
     argumentos = reqparse.RequestParser()  # cria variável dos parâmetros
-    argumentos.add_argument('nome', type=str, required=True,\
-         help="The field 'nome' cannot be left blank")
-    argumentos.add_argument('estrelas', type=float, required=True, \
-        help="The field 'nome' cannot be left blank")
-    argumentos.add_argument('diaria', type=float, required=True, \
-        help="The field 'nome' cannot be left blank")
+    argumentos.add_argument('nome', type=str, required=True, help="The field \
+        'nome' cannot be left blank")
+    argumentos.add_argument('estrelas', type=float, required=True, help="The field \
+        'nome' cannot be left blank")
+    argumentos.add_argument('diaria', type=float, required=True, help="The field \
+        'nome' cannot be left blank")
     argumentos.add_argument('cidade')
 
     def get(self, hotel_id):
